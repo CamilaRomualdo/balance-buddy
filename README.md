@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Balance Buddy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Testing a simple ReactJS application using Jest and Enzyme.
 
-## Available Scripts
+# Study Insights
 
-In the project directory, you can run:
+This project was significantly inspired by and developed with insights gained from the video tutorial ["React testing with Jest and Enzyme"](https://www.youtube.com/watch?v=XNzVMP7Mnxg&ab_channel=Duomly) by Duomly. 
 
-### `npm start`
+The decision to follow this particular tutorial was driven by its clear, concise explanations and practical examples.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Important
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project was developed using React 16 and requires Node.js version 16. If you are using a different version of Node.js, particularly any version higher than 16, you may encounter errors. 
 
-### `npm test`
+## Node.js Version Compatibility Error
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The error error:0308010C:digital envelope routines::unsupported is frequently encountered by developers working with Node.js, particularly when using versions higher than 16. This issue arises due to changes in how Node.js manages cryptography, a shift primarily driven by the adoption of OpenSSL's new cryptographic module policy.
 
-### `npm run build`
+With the release of Node.js version 17, OpenSSL has been set to use the "default" implementation provider, moving away from the "legacy" option. This transition can create challenges in systems that have not been updated to support the most recent standards. This modification is part of a broader initiative to modernize and bolster security within the Node.js environment. However, it necessitates that developers proactively update their systems and codebases. Doing so ensures continued compatibility and allows them to benefit from the latest improvements in cryptographic technology.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+  Error: error:0308010C:digital envelope routines::unsupported
+      at new Hash (node:internal/crypto/hash:69:19)
+      at Object.createHash (node:crypto:133:10)
+      at module.exports (your\path\balance-buddy\node_modules\webpack\lib\util\createHash.js:135:53)
+      at NormalModule._initBuildHash (your\path\balance-buddy\node_modules\webpack\lib\NormalModule.js:417:16)
+      at your\path\balance-buddy\node_modules\webpack\lib\NormalModule.js:452:10
+      at your\path\balance-buddy\node_modules\webpack\lib    at your\path\balance-buddy\node_modules\loader-runner\lib\LoaderRunner.js:367:11
+      at your\path\balance-buddy\node_modules\loader-runner\lib\LoaderRunner.js:233:18
+      at context.callback (your\path\balance-buddy\node_modules\loader-runner\lib\LoaderRunner.js:111:13)
+      at your\path\balance-buddy\node_modules\babel-loader\lib\index.js:59:103 {
+    opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],    
+    library: 'digital envelope routines',
+    reason: 'unsupported',
+    code: 'ERR_OSSL_EVP_UNSUPPORTED'
+  }
+```
+#### How To Fix
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To resolve this error, you have several options to consider.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Opiton 1:
 
-### `npm run eject`
+1. Downgrade to Node.js v16.
+2. Enable legacy OpenSSL provider.
+   - On Unix-like (Linux, macOS, Git bash, etc.):
+   `export NODE_OPTIONS=--openssl-legacy-provider`
+   - On Windows command prompt:
+   `set NODE_OPTIONS=--openssl-legacy-provider`
+3. In your package.json: change this line.
+`"start": "react-scripts start"`
+to
+`"start": "react-scripts --openssl-legacy-provider start"`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Option 2:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To Windows users: 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Install Manage Multiple Installations of Node.js on a Windows Computer
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Visit [nvm-windows](https://github.com/coreybutler/nvm-windows) and download the nvm-windows installer.
+2. Open your command prompt.
+3. Install Node.js 16 version:
+`nvm install 16`
+1. Switch to use Node.js 16 version:
+`nvm use 16`
+1. Check all installed Node.js versions:
+`nvm list`
 
-## Learn More
+See more: https://github.com/coreybutler/nvm-windows
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Option 2:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Another way to fix the issue is to run `npm audit fix --force` after executing `npm install`.
 
-### Code Splitting
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For Node.js version 16 or below:
 
-### Analyzing the Bundle Size
+```
+  npm i
+  npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For Node.js version greater than 16:
 
-### Making a Progressive Web App
+```
+  npm i
+  npm audit fix --force
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Tecnologies
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Enzyme](https://enzymejs.github.io/enzyme/)
+[Jest](https://jestjs.io/)
+[React.js](https://react.dev/)
